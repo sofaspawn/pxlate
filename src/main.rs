@@ -13,6 +13,15 @@ fn main() {
     let img_path = args[1].clone();
     let op_img_name = args[2].clone();
 
+    let mut pix = 10;
+
+    if args.len() > 3 {
+        match args.len() {
+            4 => pix = args[3].parse::<u32>().unwrap() as usize,
+            _ => pix = pix,
+        }
+    }
+
     let img = ImageReader::open(img_path).unwrap().decode().unwrap();
 
     let (img_x, img_y) = img.dimensions();
@@ -20,7 +29,7 @@ fn main() {
     let mut matrix: Vec<Rgba<u8>> = img.pixels().map(|p| p.2).collect();
     //dbg!(matrix);
 
-    pixelate(&mut matrix);
+    pixelate(&mut matrix, pix);
 
     let fin_img = ImageBuffer::from_fn(img_x, img_y, |x, y| {
         matrix[(y * img_x + x) as usize] // Access the corresponding pixel
@@ -29,9 +38,9 @@ fn main() {
     fin_img.save(op_img_name).expect("Error saving the image");
 }
 
-fn pixelate(matrix: &mut Vec<Rgba<u8>>) {
+fn pixelate(matrix: &mut Vec<Rgba<u8>>, pix: usize) {
     let mut i = 0;
-    let pix = 10;
+    //let pix = 10;
 
     while i < matrix.len() {
         // dbg!(i);
@@ -52,7 +61,7 @@ fn pixelate(matrix: &mut Vec<Rgba<u8>>) {
 
         let clr = Rgba([avg_red, avg_green, avg_blue, 255]);
 
-        for k in i..i + pix {
+        for k in i..(i + pix).min(matrix.len()) {
             matrix[k] = clr;
         }
 
