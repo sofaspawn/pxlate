@@ -1,5 +1,8 @@
 # pxlate
-- apply a pixelate/blurry shader to given image
+- apply filters to images
+
+## features:
+- smudges the image
 
 ## TODO:
 - [x] take image as input in the form of command arguements
@@ -8,3 +11,7 @@
 - [x] replace the window with the average value of the 2x2 pixel grid
 - [x] move the window for the entire image
 - [x] render the image
+
+
+- [ ]  add more functions such as "actual" pixelate, negative, etc...
+- [ ] downscale image -> upscale image -> apply color from color pallete
