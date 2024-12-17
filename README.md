@@ -7,9 +7,9 @@
 
 ## So far:
 <div style="display: flex; justify-content: space-between;">
-    <img src="./mahoraga_test.jpg" alt="test_image" width="30%" />
-    <img src="./mahoraga_pxlated.png" alt="pixelated image" width="30%" />
-    <img src="./mahoraga_smudge.png" alt="smudged image" width="30%" />
+    <img src="./readme_expo/mahoraga_test.jpg" alt="test_image" width="30%" />
+    <img src="./readme_expo/mahoraga_pxlated.png" alt="pixelated image" width="30%" />
+    <img src="./readme_expo/mahoraga_smudge.png" alt="smudged image" width="30%" />
 </div>
 
 ## TODO:
