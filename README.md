@@ -4,6 +4,10 @@
 ## features:
 - smudges the image
 
+## So far:
+![original test image](./test_image.png)
+![pixelated test image](./pxlated.png)
+
 ## TODO:
 - [x] take image as input in the form of command arguements
 - [x] read the image pixels
