@@ -183,8 +183,8 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
 fn downscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (smolwidth, smolheight) = (width / 8, height / 8);
-    //let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
-    let (smolwidth, smolheight) = (width / 50, height / 50);
+    let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
+                                                           //let (smolwidth, smolheight) = (width / 50, height / 50);
 
     let dwnsclimg = img.resize_exact(smolwidth, smolheight, image::imageops::FilterType::Nearest);
     return dwnsclimg;
@@ -193,8 +193,8 @@ fn downscale(img: DynamicImage) -> DynamicImage {
 fn upscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (bigwidth, bigheight) = (width * 8, height * 8);
-    //let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
-    let (bigwidth, bigheight) = (width * 50, height * 50);
+    let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
+                                                         //let (bigwidth, bigheight) = (width * 50, height * 50);
 
     let upsclimg = img.resize_exact(bigwidth, bigheight, image::imageops::FilterType::Nearest);
     return upsclimg;
