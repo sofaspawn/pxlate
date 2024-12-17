@@ -19,9 +19,13 @@
 - [x] replace the window with the average value of the 2x2 pixel grid
 - [x] move the window for the entire image
 - [x] render the image
-
-- [ ]  add more functions such as "actual" pixelate, negative, etc...
+- [x]  add more functions such as "actual" pixelate, negative, etc...
 - [x] downscale image -> apply color from color pallete -> upscale image
 
+- [ ] improve the ui
+- [ ] add commands for changing the scaling factor
+- [ ] restructure the color palette code
+
 ## Problems:
-- [ ] black is almost always red (check the color_diff)
+- [x] black is almost always red (check the color_diff)
+- [ ] the scaling factor changes for every image i.e. make it more user friendly i.e.i.e. add a command for that
