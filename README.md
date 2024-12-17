@@ -22,3 +22,6 @@
 
 - [ ]  add more functions such as "actual" pixelate, negative, etc...
 - [x] downscale image -> apply color from color pallete -> upscale image
+
+## Problems:
+- [ ] black is almost always red (check the color_diff)

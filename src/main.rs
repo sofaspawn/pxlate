@@ -68,24 +68,24 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
         //Rgba([170, 255, 102, 255]),
         //Rgba([0, 136, 255, 255]),
         //Rgba([187, 187, 187, 255]),
-        //// onedark
-        //Rgba([40, 44, 52, 255]),
-        //Rgba([171, 178, 191, 255]),
-        //Rgba([224, 108, 117, 255]),
-        //Rgba([152, 195, 121, 255]),
-        //Rgba([229, 192, 123, 255]),
-        //Rgba([97, 175, 239, 255]),
-        //Rgba([198, 120, 221, 255]),
-        //Rgba([86, 182, 194, 255]),
-        //Rgba([190, 80, 70, 255]),
-        //Rgba([92, 99, 112, 255]),
-        //Rgba([130, 137, 151, 255]),
-        //Rgba([209, 154, 102, 255]),
-        //Rgba([195, 232, 141, 255]),
-        //Rgba([56, 62, 71, 255]),
-        //Rgba([239, 241, 245, 255]),
-        //Rgba([75, 82, 94, 255]),
-        //// dracula
+        // onedark
+        Rgba([40, 44, 52, 255]),
+        Rgba([171, 178, 191, 255]),
+        Rgba([224, 108, 117, 255]),
+        Rgba([152, 195, 121, 255]),
+        Rgba([229, 192, 123, 255]),
+        Rgba([97, 175, 239, 255]),
+        Rgba([198, 120, 221, 255]),
+        Rgba([86, 182, 194, 255]),
+        Rgba([190, 80, 70, 255]),
+        Rgba([92, 99, 112, 255]),
+        Rgba([130, 137, 151, 255]),
+        Rgba([209, 154, 102, 255]),
+        Rgba([195, 232, 141, 255]),
+        Rgba([56, 62, 71, 255]),
+        Rgba([239, 241, 245, 255]),
+        Rgba([75, 82, 94, 255]),
+        // dracula
         //Rgba([40, 42, 54, 255]),
         //Rgba([248, 248, 242, 255]),
         //Rgba([255, 85, 85, 255]),
@@ -103,22 +103,22 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
         //Rgba([241, 250, 140, 255]),
         //Rgba([68, 71, 90, 255]),
         // monochrome
-        Rgba([0, 0, 0, 255]),
-        Rgba([255, 255, 255, 255]),
-        Rgba([85, 85, 85, 255]),
-        Rgba([170, 170, 170, 255]),
-        Rgba([212, 212, 212, 255]),
-        Rgba([128, 128, 128, 255]),
-        Rgba([192, 192, 192, 255]),
-        Rgba([224, 224, 224, 255]),
-        Rgba([160, 160, 160, 255]),
-        Rgba([32, 32, 32, 255]),
-        Rgba([96, 96, 96, 255]),
-        Rgba([144, 144, 144, 255]),
-        Rgba([208, 208, 208, 255]),
-        Rgba([16, 16, 16, 255]),
-        Rgba([240, 240, 240, 255]),
-        Rgba([64, 64, 64, 255]),
+        //Rgba([0, 0, 0, 255]),
+        //Rgba([255, 255, 255, 255]),
+        //Rgba([85, 85, 85, 255]),
+        //Rgba([170, 170, 170, 255]),
+        //Rgba([212, 212, 212, 255]),
+        //Rgba([128, 128, 128, 255]),
+        //Rgba([192, 192, 192, 255]),
+        //Rgba([224, 224, 224, 255]),
+        //Rgba([160, 160, 160, 255]),
+        //Rgba([32, 32, 32, 255]),
+        //Rgba([96, 96, 96, 255]),
+        //Rgba([144, 144, 144, 255]),
+        //Rgba([208, 208, 208, 255]),
+        //Rgba([16, 16, 16, 255]),
+        //Rgba([240, 240, 240, 255]),
+        //Rgba([64, 64, 64, 255]),
         // monokai
         //Rgba([39, 40, 34, 255]),
         //Rgba([248, 248, 242, 255]),
@@ -183,8 +183,8 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
 fn downscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (smolwidth, smolheight) = (width / 8, height / 8);
-    let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
-                                                           //let (smolwidth, smolheight) = (width / 50, height / 50);
+    //let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
+    let (smolwidth, smolheight) = (width / 20, height / 20);
 
     let dwnsclimg = img.resize_exact(smolwidth, smolheight, image::imageops::FilterType::Nearest);
     return dwnsclimg;
@@ -193,8 +193,8 @@ fn downscale(img: DynamicImage) -> DynamicImage {
 fn upscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (bigwidth, bigheight) = (width * 8, height * 8);
-    let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
-                                                         //let (bigwidth, bigheight) = (width * 50, height * 50);
+    //let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
+    let (bigwidth, bigheight) = (width * 20, height * 20);
 
     let upsclimg = img.resize_exact(bigwidth, bigheight, image::imageops::FilterType::Nearest);
     return upsclimg;
