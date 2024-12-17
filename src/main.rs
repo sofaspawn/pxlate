@@ -33,7 +33,7 @@ fn main() {
 
     smudge(&mut matrix, pix);
     let pxlated = pxlate(img);
-    pxlated.save("pxlated.png").unwrap();
+    pxlated.save("mahoraga_pxlated.png").unwrap();
 
     let fin_img = ImageBuffer::from_fn(img_x, img_y, |x, y| {
         matrix[(y * img_x + x) as usize] // Access the corresponding pixel
