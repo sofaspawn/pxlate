@@ -49,9 +49,9 @@ fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
 }
 
 fn pxlate(img: DynamicImage) -> DynamicImage {
-    let (width, height) = img.dimensions();
     let dwnscl = downscale(img);
     let palette: Vec<Rgba<u8>> = vec![
+        // retro
         Rgba([0, 0, 0, 255]),
         Rgba([255, 255, 255, 255]),
         Rgba([136, 0, 0, 255]),
@@ -68,6 +68,7 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
         Rgba([170, 255, 102, 255]),
         Rgba([0, 136, 255, 255]),
         Rgba([187, 187, 187, 255]),
+        // onedark
         Rgba([40, 44, 52, 255]),
         Rgba([171, 178, 191, 255]),
         Rgba([224, 108, 117, 255]),
@@ -84,6 +85,40 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
         Rgba([56, 62, 71, 255]),
         Rgba([239, 241, 245, 255]),
         Rgba([75, 82, 94, 255]),
+        // dracula
+        Rgba([40, 42, 54, 255]),
+        Rgba([248, 248, 242, 255]),
+        Rgba([255, 85, 85, 255]),
+        Rgba([80, 250, 123, 255]),
+        Rgba([241, 250, 140, 255]),
+        Rgba([189, 147, 249, 255]),
+        Rgba([255, 121, 198, 255]),
+        Rgba([139, 233, 253, 255]),
+        Rgba([255, 184, 108, 255]),
+        Rgba([68, 71, 90, 255]),
+        Rgba([98, 114, 164, 255]),
+        Rgba([255, 110, 110, 255]),
+        Rgba([95, 255, 135, 255]),
+        Rgba([58, 60, 78, 255]),
+        Rgba([241, 250, 140, 255]),
+        Rgba([68, 71, 90, 255]),
+        // monokai
+        Rgba([39, 40, 34, 255]),
+        Rgba([248, 248, 242, 255]),
+        Rgba([249, 38, 114, 255]),
+        Rgba([166, 226, 46, 255]),
+        Rgba([230, 219, 116, 255]),
+        Rgba([102, 217, 239, 255]),
+        Rgba([174, 129, 255, 255]),
+        Rgba([161, 239, 228, 255]),
+        Rgba([253, 151, 31, 255]),
+        Rgba([69, 70, 64, 255]),
+        Rgba([117, 113, 94, 255]),
+        Rgba([249, 38, 114, 255]),
+        Rgba([166, 226, 46, 255]),
+        Rgba([56, 56, 48, 255]),
+        Rgba([248, 248, 242, 255]),
+        Rgba([117, 113, 94, 255]),
     ];
 
     let mut matrix: Vec<Rgba<u8>> = dwnscl.pixels().map(|p| p.2).collect();
@@ -113,7 +148,7 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
 
 fn downscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
-    let (smolwidth, smolheight) = (width / 5, height / 5);
+    let (smolwidth, smolheight) = (width / 8, height / 8);
 
     let dwnsclimg = img.resize_exact(smolwidth, smolheight, image::imageops::FilterType::Nearest);
     return dwnsclimg;
@@ -121,7 +156,7 @@ fn downscale(img: DynamicImage) -> DynamicImage {
 
 fn upscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
-    let (bigwidth, bigheight) = (width * 5, height * 5);
+    let (bigwidth, bigheight) = (width * 8, height * 8);
 
     let upsclimg = img.resize_exact(bigwidth, bigheight, image::imageops::FilterType::Nearest);
     return upsclimg;
