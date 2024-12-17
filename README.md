@@ -14,4 +14,4 @@
 
 
 - [ ]  add more functions such as "actual" pixelate, negative, etc...
-- [ ] downscale image -> upscale image -> apply color from color pallete
+- [ ] downscale image -> apply color from color pallete -> upscale image

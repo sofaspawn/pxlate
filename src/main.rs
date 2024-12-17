@@ -1,4 +1,6 @@
-use image::Rgba;
+use std::cmp::min;
+
+use image::{DynamicImage, Rgba};
 use image::{GenericImageView, ImageBuffer, ImageReader};
 
 fn main() {
@@ -29,7 +31,9 @@ fn main() {
     let mut matrix: Vec<Rgba<u8>> = img.pixels().map(|p| p.2).collect();
     //dbg!(matrix);
 
-    pixelate(&mut matrix, pix);
+    smudge(&mut matrix, pix);
+    let pxlated = pxlate(img);
+    pxlated.save("pxlated.png").unwrap();
 
     let fin_img = ImageBuffer::from_fn(img_x, img_y, |x, y| {
         matrix[(y * img_x + x) as usize] // Access the corresponding pixel
@@ -38,7 +42,92 @@ fn main() {
     fin_img.save(op_img_name).expect("Error saving the image");
 }
 
-fn pixelate(matrix: &mut Vec<Rgba<u8>>, pix: usize) {
+fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
+    let avg_color_1 = c1.clone().0.iter().map(|c| *c as i32).sum::<i32>() / c1.0.len() as i32;
+    let avg_color_2 = c2.clone().0.iter().map(|c| *c as i32).sum::<i32>() / c2.0.len() as i32;
+    return (avg_color_2 - avg_color_1).abs();
+}
+
+fn pxlate(img: DynamicImage) -> DynamicImage {
+    let (width, height) = img.dimensions();
+    let dwnscl = downscale(img);
+    let palette: Vec<Rgba<u8>> = vec![
+        Rgba([0, 0, 0, 255]),
+        Rgba([255, 255, 255, 255]),
+        Rgba([136, 0, 0, 255]),
+        Rgba([170, 255, 238, 255]),
+        Rgba([204, 68, 204, 255]),
+        Rgba([0, 204, 85, 255]),
+        Rgba([0, 0, 170, 255]),
+        Rgba([238, 238, 119, 255]),
+        Rgba([221, 136, 85, 255]),
+        Rgba([102, 68, 0, 255]),
+        Rgba([255, 119, 119, 255]),
+        Rgba([51, 51, 51, 255]),
+        Rgba([119, 119, 119, 255]),
+        Rgba([170, 255, 102, 255]),
+        Rgba([0, 136, 255, 255]),
+        Rgba([187, 187, 187, 255]),
+        Rgba([40, 44, 52, 255]),
+        Rgba([171, 178, 191, 255]),
+        Rgba([224, 108, 117, 255]),
+        Rgba([152, 195, 121, 255]),
+        Rgba([229, 192, 123, 255]),
+        Rgba([97, 175, 239, 255]),
+        Rgba([198, 120, 221, 255]),
+        Rgba([86, 182, 194, 255]),
+        Rgba([190, 80, 70, 255]),
+        Rgba([92, 99, 112, 255]),
+        Rgba([130, 137, 151, 255]),
+        Rgba([209, 154, 102, 255]),
+        Rgba([195, 232, 141, 255]),
+        Rgba([56, 62, 71, 255]),
+        Rgba([239, 241, 245, 255]),
+        Rgba([75, 82, 94, 255]),
+    ];
+
+    let mut matrix: Vec<Rgba<u8>> = dwnscl.pixels().map(|p| p.2).collect();
+
+    for (i, pxl) in matrix.clone().iter().enumerate() {
+        let (mut iclr, mut pxldiff) = (Rgba([0, 0, 0, 255]), 255);
+        for clr in &palette {
+            let diff = color_diff(*pxl, *clr);
+            if diff < pxldiff {
+                iclr = *clr;
+            }
+            pxldiff = min(pxldiff, diff);
+        }
+        matrix[i] = iclr;
+    }
+
+    let (smol_width, smol_height) = dwnscl.dimensions();
+
+    let fin_img = ImageBuffer::from_fn(smol_width, smol_height, |x, y| {
+        matrix[(y * smol_width + x) as usize] // Access the corresponding pixel
+    });
+
+    let upsclimg = upscale(DynamicImage::ImageRgba8(fin_img));
+
+    return upsclimg;
+}
+
+fn downscale(img: DynamicImage) -> DynamicImage {
+    let (width, height) = img.dimensions();
+    let (smolwidth, smolheight) = (width / 5, height / 5);
+
+    let dwnsclimg = img.resize_exact(smolwidth, smolheight, image::imageops::FilterType::Nearest);
+    return dwnsclimg;
+}
+
+fn upscale(img: DynamicImage) -> DynamicImage {
+    let (width, height) = img.dimensions();
+    let (bigwidth, bigheight) = (width * 5, height * 5);
+
+    let upsclimg = img.resize_exact(bigwidth, bigheight, image::imageops::FilterType::Nearest);
+    return upsclimg;
+}
+
+fn smudge(matrix: &mut Vec<Rgba<u8>>, pix: usize) {
     let mut i = 0;
     //let pix = 10;
 
