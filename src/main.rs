@@ -33,7 +33,7 @@ fn main() {
 
     smudge(&mut matrix, pix);
     let pxlated = pxlate(img);
-    pxlated.save("mahoraga_pxlated.png").unwrap();
+    pxlated.save("readme_expo/mahoraga_pxlated.png").unwrap();
 
     let fin_img = ImageBuffer::from_fn(img_x, img_y, |x, y| {
         matrix[(y * img_x + x) as usize] // Access the corresponding pixel
@@ -43,9 +43,11 @@ fn main() {
 }
 
 fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
-    let avg_color_1 = c1.clone().0.iter().map(|c| *c as i32).sum::<i32>() / c1.0.len() as i32;
-    let avg_color_2 = c2.clone().0.iter().map(|c| *c as i32).sum::<i32>() / c2.0.len() as i32;
-    return (avg_color_2 - avg_color_1).abs();
+    let r_diff = (c1[0] as i32 - c2[0] as i32).pow(2);
+    let g_diff = (c1[1] as i32 - c2[1] as i32).pow(2);
+    let b_diff = (c1[2] as i32 - c2[2] as i32).pow(2);
+
+    ((r_diff + g_diff + b_diff) as f64).sqrt() as i32
 }
 
 fn pxlate(img: DynamicImage) -> DynamicImage {
@@ -183,8 +185,8 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
 fn downscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (smolwidth, smolheight) = (width / 8, height / 8);
-    //let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
-    let (smolwidth, smolheight) = (width / 20, height / 20);
+    let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
+                                                           //let (smolwidth, smolheight) = (width / 5, height / 5);
 
     let dwnsclimg = img.resize_exact(smolwidth, smolheight, image::imageops::FilterType::Nearest);
     return dwnsclimg;
@@ -193,8 +195,8 @@ fn downscale(img: DynamicImage) -> DynamicImage {
 fn upscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (bigwidth, bigheight) = (width * 8, height * 8);
-    //let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
-    let (bigwidth, bigheight) = (width * 20, height * 20);
+    let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
+                                                         //let (bigwidth, bigheight) = (width * 5, height * 5);
 
     let upsclimg = img.resize_exact(bigwidth, bigheight, image::imageops::FilterType::Nearest);
     return upsclimg;
