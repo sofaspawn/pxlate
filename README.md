@@ -5,8 +5,10 @@
 - smudges the image
 
 ## So far:
-![original test image](./test_image.png)
-![pixelated test image](./pxlated.png)
+<div style="display: flex; justify-content: space-between;">
+    <img src="./test_image.png" alt="test_image" width="45%" />
+    <img src="./pxlated.png" alt="pixelated image" width="45%" />
+</div>
 
 ## TODO:
 - [x] take image as input in the form of command arguements
