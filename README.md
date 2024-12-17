@@ -7,9 +7,9 @@
 
 ## So far:
 <div style="display: flex; justify-content: space-between;">
-    <img src="./mahoraga_test.jpg" alt="test_image" width="45%" />
-    <img src="./pxlated.png" alt="pixelated image" width="45%" />
-    <img src="./output.png" alt="smudged image" width="45%" />
+    <img src="./mahoraga_test.jpg" alt="test_image" width="30%" />
+    <img src="./pxlated.png" alt="pixelated image" width="30%" />
+    <img src="./output.png" alt="smudged image" width="30%" />
 </div>
 
 ## TODO:
