@@ -3,6 +3,7 @@
 
 ## features:
 - smudges the image
+- does a pretty rudimentary rendering of pixelated image
 
 ## So far:
 <div style="display: flex; justify-content: space-between;">
