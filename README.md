@@ -21,4 +21,4 @@
 - [x] render the image
 
 - [ ]  add more functions such as "actual" pixelate, negative, etc...
-- [ ] downscale image -> apply color from color pallete -> upscale image
+- [x] downscale image -> apply color from color pallete -> upscale image
