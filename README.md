@@ -24,7 +24,11 @@
 
 - [ ] improve the ui
 - [ ] add commands for changing the scaling factor
+- [ ] add commands to check if the user wants to pixelate or smudge
+- [ ] automatically change the scaling factor based on the file size of images
 - [ ] restructure the color palette code
+
+- [ ] gracefully handle errors
 
 ## Problems:
 - [x] black is almost always red (check the color_diff)
