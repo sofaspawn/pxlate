@@ -3,17 +3,29 @@ use std::cmp::min;
 use image::{DynamicImage, Rgba};
 use image::{GenericImageView, ImageBuffer, ImageReader};
 
+
+fn help(args: &Vec<String>){
+    let help = format!("
+        !!!INVALID CALL!!!
+        USAGE: {} <command> <path-to-input-image.png/jpg/jpeg> <name-of-output-image.png>
+        List of valid commands:
+        1. pixelate -> convert an image into a cool pixelated representation of itself
+        2. smudge -> basic smudge the entire image to make it a little blurry
+        ", args[0]);
+    eprintln!("{}", help);
+}
+
 fn main() {
     let args = std::env::args().collect::<Vec<_>>();
 
-    if args.len() < 3 {
-        eprintln!("command not valid");
-        eprintln!("USAGE: {} <path-to-image> <name-of-output-file>", args[0]);
+    if args.len() < 4 {
+        help(&args);
         return;
     }
 
-    let img_path = args[1].clone();
-    let op_img_name = args[2].clone();
+    let command = args[1].clone();
+    let img_path = args[2].clone();
+    let op_img_name = args[3].clone();
 
     let mut pix = 10;
 
@@ -26,20 +38,15 @@ fn main() {
 
     let img = ImageReader::open(img_path).unwrap().decode().unwrap();
 
-    let (img_x, img_y) = img.dimensions();
 
-    let mut matrix: Vec<Rgba<u8>> = img.pixels().map(|p| p.2).collect();
-    //dbg!(matrix);
+    let output = match command.as_str(){
+        "smudge" => {smudge(img.clone(), pix)},
+        "pixelate" => {pxlate(img.clone())},
+        _ => {img.clone()}
+    };
 
-    smudge(&mut matrix, pix);
-    let pxlated = pxlate(img);
-    pxlated.save("readme_expo/mahoraga_pxlated.png").unwrap();
+    output.save(op_img_name).expect("file not saved properly");
 
-    let fin_img = ImageBuffer::from_fn(img_x, img_y, |x, y| {
-        matrix[(y * img_x + x) as usize] // Access the corresponding pixel
-    });
-
-    fin_img.save(op_img_name).expect("Error saving the image");
 }
 
 fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
@@ -186,7 +193,7 @@ fn downscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (smolwidth, smolheight) = (width / 8, height / 8);
     //let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
-    let (smolwidth, smolheight) = (width / 10, height / 10);
+    let (smolwidth, smolheight) = (width / 4, height / 4);
 
     let dwnsclimg = img.resize_exact(smolwidth, smolheight, image::imageops::FilterType::Nearest);
     return dwnsclimg;
@@ -196,13 +203,15 @@ fn upscale(img: DynamicImage) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (bigwidth, bigheight) = (width * 8, height * 8);
     //let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
-    let (bigwidth, bigheight) = (width * 10, height * 10);
+    let (bigwidth, bigheight) = (width * 4, height * 4);
 
     let upsclimg = img.resize_exact(bigwidth, bigheight, image::imageops::FilterType::Nearest);
     return upsclimg;
 }
 
-fn smudge(matrix: &mut Vec<Rgba<u8>>, pix: usize) {
+fn smudge(img: DynamicImage, pix: usize) -> DynamicImage {
+    let (img_x, img_y) = img.dimensions();
+    let mut matrix: Vec<Rgba<u8>> = img.pixels().map(|p| p.2).collect();
     let mut i = 0;
     //let pix = 10;
 
@@ -231,4 +240,9 @@ fn smudge(matrix: &mut Vec<Rgba<u8>>, pix: usize) {
 
         i = j + i;
     }
+    let fin_img = ImageBuffer::from_fn(img_x, img_y, |x, y| {
+        matrix[(y * img_x + x) as usize] // Access the corresponding pixel
+    });
+
+    return DynamicImage::ImageRgba8(fin_img);
 }
