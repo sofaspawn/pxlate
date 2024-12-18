@@ -3,19 +3,25 @@ use std::cmp::min;
 use image::{DynamicImage, Rgba};
 use image::{GenericImageView, ImageBuffer, ImageReader};
 
+use std::time;
+
 
 fn help(args: &Vec<String>){
     let help = format!("
-        !!!INVALID CALL!!!
-        USAGE: {} <command> <path-to-input-image.png/jpg/jpeg> <name-of-output-image.png>
-        List of valid commands:
-        1. pixelate -> convert an image into a cool pixelated representation of itself
-        2. smudge -> basic smudge the entire image to make it a little blurry
-        ", args[0]);
+!!!INVALID CALL!!!
+USAGE: {} <command> <path-to-input-image.png/jpg/jpeg> <name-of-output-image.png> [pixel_size]
+[] -> optional
+List of valid commands:
+1. pixelate -> convert an image into a cool pixelated representation of itself
+2. smudge -> basic smudge the entire image to make it a little blurry
+
+example: {} pixelate input.png output.png 4
+        ", args[0], args[0]);
     eprintln!("{}", help);
 }
 
 fn main() {
+    let start = time::Instant::now();
     let args = std::env::args().collect::<Vec<_>>();
 
     if args.len() < 4 {
@@ -29,15 +35,14 @@ fn main() {
 
     let mut pix = 10;
 
-    if args.len() > 3 {
+    if args.len() > 4 {
         match args.len() {
-            4 => pix = args[3].parse::<u32>().unwrap() as usize,
+            4 => pix = args[4].parse::<u32>().unwrap() as usize,
             _ => pix = pix,
         }
     }
 
-    let img = ImageReader::open(img_path).unwrap().decode().unwrap();
-
+    let img = ImageReader::open(&img_path).unwrap().decode().unwrap();
 
     let output = match command.as_str(){
         "smudge" => {smudge(img.clone(), pix)},
@@ -45,8 +50,12 @@ fn main() {
         _ => {img.clone()}
     };
 
-    output.save(op_img_name).expect("file not saved properly");
+    output.save(&op_img_name).expect("file not saved properly");
 
+    let end = time::Instant::now();
+    println!("✨ operation successful ✨");
+    println!("{img_path} -> {op_img_name}");
+    println!("Time Taken: {:?}", end - start);
 }
 
 fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
