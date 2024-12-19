@@ -1,9 +1,6 @@
 # pxlate
-- apply filters to images
-
-## features:
-- smudges the image
-- generates pixel art for your image with varying levels of detail
+- generates pixel art for your image
+- and maybe occasionally smudge it too..
 
 ## So far:
 <div style="display: flex; justify-content: space-between;">
