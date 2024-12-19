@@ -9,14 +9,18 @@ use std::time;
 fn help(args: &Vec<String>){
     let help = format!("
 !!!INVALID CALL!!!
-USAGE: {} <command> <path-to-input-image.png/jpg/jpeg> <name-of-output-image.png> [pixel_size]
+USAGE: {binary_name} <command> <path-to-input-image.png/jpg/jpeg> <name-of-output-image.png> [pixel_size/scaling_factor]
 [] -> optional
 List of valid commands:
-1. pixelate -> convert an image into a cool pixelated representation of itself
-2. smudge -> basic smudge the entire image to make it a little blurry
+1. smudge -> basic smudge the entire image to make it a little blurry
+2. pixelate -> convert an image into a cool pixelated representation of itself
 
-example: {} pixelate input.png output.png 4
-        ", args[0], args[0]);
+Optional:
+1. pixel_size -> number of pixels to average out horizontally
+2. scaling_factor -> the amount by which to downscale and upscale the image (affects the level of detail)
+
+example: {binary_name} pixelate input.png output.png 4
+        ", binary_name=args[0]);
     eprintln!("{}", help);
 }
 
@@ -42,7 +46,10 @@ fn main() {
         }
     }
 
+    println!("Reading Image...");
     let img = ImageReader::open(&img_path).unwrap().decode().unwrap();
+
+    println!("Performing Operation...");
 
     let output = match command.as_str(){
         "smudge" => {smudge(img.clone(), pix)},
@@ -53,7 +60,7 @@ fn main() {
     output.save(&op_img_name).expect("file not saved properly");
 
     let end = time::Instant::now();
-    println!("✨ operation successful ✨");
+    println!("✨ Operation Successful ✨");
     println!("{img_path} -> {op_img_name}");
     println!("Time Taken: {:?}", end - start);
 }
