@@ -8,9 +8,11 @@ use std::time;
 
 fn help(args: &Vec<String>){
     let help = format!("
+
 !!!INVALID CALL!!!
 USAGE: {binary_name} <command> <path-to-input-image.png/jpg/jpeg> <name-of-output-image.png> [pixel_size/scaling_factor]
 [] -> optional
+
 List of valid commands:
 1. smudge -> basic smudge the entire image to make it a little blurry
 2. pixelate -> convert an image into a cool pixelated representation of itself
@@ -20,6 +22,7 @@ Optional:
 2. scaling_factor -> the amount by which to downscale and upscale the image (affects the level of detail)
 
 example: {binary_name} pixelate input.png output.png 4
+
         ", binary_name=args[0]);
     eprintln!("{}", help);
 }
