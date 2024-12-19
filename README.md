@@ -23,8 +23,8 @@
 - [x] downscale image -> apply color from color pallete -> upscale image
 
 - [ ] improve the ui
-- [ ] add commands for changing the scaling factor
-- [ ] add commands to check if the user wants to pixelate or smudge
+- [x] add commands for changing the scaling factor
+- [x] add commands to check if the user wants to pixelate or smudge
 - [ ] automatically change the scaling factor based on the file size of images
 - [ ] restructure the color palette code
 
@@ -32,4 +32,4 @@
 
 ## Problems:
 - [x] black is almost always red (check the color_diff)
-- [ ] the scaling factor changes for every image i.e. make it more user friendly i.e.i.e. add a command for that
+- [x] the scaling factor changes for every image i.e. make it more user friendly i.e.i.e. add a command for that
