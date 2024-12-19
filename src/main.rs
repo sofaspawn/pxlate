@@ -40,9 +40,9 @@ fn main() {
     let mut pix = 10;
 
     if args.len() > 4 {
-        match args.len() {
-            4 => pix = args[4].parse::<u32>().unwrap() as usize,
-            _ => pix = pix,
+        pix = match args.len() {
+            5 => args[4].parse::<u32>().unwrap() as usize,
+            _ => pix,
         }
     }
 
@@ -53,7 +53,7 @@ fn main() {
 
     let output = match command.as_str(){
         "smudge" => {smudge(img.clone(), pix)},
-        "pixelate" => {pxlate(img.clone())},
+        "pixelate" => {pxlate(img.clone(), pix)},
         _ => {img.clone()}
     };
 
@@ -62,7 +62,7 @@ fn main() {
     let end = time::Instant::now();
     println!("✨ Operation Successful ✨");
     println!("{img_path} -> {op_img_name}");
-    println!("Time Taken: {:?}", end - start);
+    println!("Time Taken: {:?} seconds", (end - start).as_secs_f64());
 }
 
 fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
@@ -73,8 +73,8 @@ fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
     ((r_diff + g_diff + b_diff) as f64).sqrt() as i32
 }
 
-fn pxlate(img: DynamicImage) -> DynamicImage {
-    let dwnscl = downscale(img);
+fn pxlate(img: DynamicImage, sfactor:usize) -> DynamicImage {
+    let dwnscl = downscale(img, sfactor);
     let palette: Vec<Rgba<u8>> = vec![
         // retro
         //Rgba([0, 0, 0, 255]),
@@ -200,26 +200,25 @@ fn pxlate(img: DynamicImage) -> DynamicImage {
         matrix[(y * smol_width + x) as usize] // Access the corresponding pixel
     });
 
-    let upsclimg = upscale(DynamicImage::ImageRgba8(fin_img));
+    let upsclimg = upscale(DynamicImage::ImageRgba8(fin_img), sfactor);
 
     return upsclimg;
 }
 
-fn downscale(img: DynamicImage) -> DynamicImage {
+fn downscale(img: DynamicImage, sfactor: usize) -> DynamicImage {
     let (width, height) = img.dimensions();
-    //let (smolwidth, smolheight) = (width / 8, height / 8);
     //let (smolwidth, smolheight) = (width / 4, height / 4); // for a more detailed image
-    let (smolwidth, smolheight) = (width / 4, height / 4);
+    let (smolwidth, smolheight) = (width / sfactor as u32, height / sfactor as u32);
 
     let dwnsclimg = img.resize_exact(smolwidth, smolheight, image::imageops::FilterType::Nearest);
     return dwnsclimg;
 }
 
-fn upscale(img: DynamicImage) -> DynamicImage {
+fn upscale(img: DynamicImage, sfactor: usize) -> DynamicImage {
     let (width, height) = img.dimensions();
     //let (bigwidth, bigheight) = (width * 8, height * 8);
     //let (bigwidth, bigheight) = (width * 4, height * 4); // for a more detailed image
-    let (bigwidth, bigheight) = (width * 4, height * 4);
+    let (bigwidth, bigheight) = (width * sfactor as u32, height * sfactor as u32);
 
     let upsclimg = img.resize_exact(bigwidth, bigheight, image::imageops::FilterType::Nearest);
     return upsclimg;
