@@ -51,9 +51,6 @@ This allows you to the application as a command:
 pxlate pixelate <image_path> <output_image> 20
 ```
 
-### Result:
-
-
 ## TODO:
 - [x] take image as input in the form of command arguements
 - [x] read the image pixels
