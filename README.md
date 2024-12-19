@@ -2,12 +2,18 @@
 - generates pixel art for your image
 - and maybe occasionally smudge it too..
 
-## So far:
+## Pixelate:
 <div style="display: flex; justify-content: space-between;">
-    <img src="./readme_expo/mahoraga_test.jpg" alt="test_image" width="30%" />
-    <img src="./readme_expo/mahoraga_pxlated.png" alt="pixelated image" width="30%" />
-    <img src="./readme_expo/mahoraga_smudge.png" alt="smudged image" width="30%" />
+    <img src="./readme_expo/geto.jpeg" alt="test_image" width="45%" />
+    <img src="./readme_expo/geto_pxlated.png" alt="pixelated image" width="45%" />
 </div>
+
+## Smudge:
+<div style="display: flex; justify-content: space-between;">
+    <img src="./readme_expo/mahoraga_test.jpg" alt="test_image" width="45%" />
+    <img src="./readme_expo/mahoraga_smudge.png" alt="smudged image" width="45%" />
+</div>
+
 
 ## Requirements
 - [Rust](https://www.rust-lang.org/tools/install) (version 1.65 or later)
@@ -46,10 +52,6 @@ pxlate pixelate <image_path> <output_image> 20
 ```
 
 ### Result:
-<div style="display: flex; justify-content: space-between;">
-    <img src="./readme_expo/geto.jpeg" alt="test_image" width="45%" />
-    <img src="./readme_expo/geto_pxlated.png" alt="pixelated image" width="45%" />
-</div>
 
 
 ## TODO:
