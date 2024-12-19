@@ -48,6 +48,12 @@ This allows you to the application as a command:
 pxlate pixelate <image_path> <output_image> 20
 ```
 
+### Result:
+<div style="display: flex; justify-content: space-between;">
+    <img src="./readme_expo/geto.jpeg" alt="test_image" width="45%" />
+    <img src="./readme_expo/geto_pxlated.png" alt="pixelated image" width="45%" />
+</div>
+
 
 ## TODO:
 - [x] take image as input in the form of command arguements
