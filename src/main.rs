@@ -24,6 +24,20 @@ example: {binary_name} pixelate input.png output.png 4
     eprintln!("{}", help);
 }
 
+fn calc_scaling_factor(img: &DynamicImage)->u32{
+    let (width, height) = img.dimensions();
+    let mut pix = 1;
+    if width > 2000 || height > 2000 {
+        pix = 40;
+    } else if width > 1000 || height > 1000 {
+        pix = 15;
+    } else if width > 250 || height > 250 {
+        pix = 8;
+    }
+    return pix;
+    
+}
+
 fn main() {
     let start = time::Instant::now();
     let args = std::env::args().collect::<Vec<_>>();
@@ -37,7 +51,7 @@ fn main() {
     let img_path = args[2].clone();
     let op_img_name = args[3].clone();
 
-    let mut pix = 10;
+    let mut pix = calc_scaling_factor(&ImageReader::open(&img_path).unwrap().decode().unwrap()) as usize;
 
     if args.len() > 4 {
         pix = match args.len() {
@@ -66,9 +80,10 @@ fn main() {
 }
 
 fn color_diff(c1: Rgba<u8>, c2: Rgba<u8>) -> i32 {
-    let r_diff = (c1[0] as i32 - c2[0] as i32).pow(2);
-    let g_diff = (c1[1] as i32 - c2[1] as i32).pow(2);
-    let b_diff = (c1[2] as i32 - c2[2] as i32).pow(2);
+    // because colors are perceived differently
+    let r_diff = (c1[0] as i32 - c2[0] as i32).pow(2) * 3;
+    let g_diff = (c1[1] as i32 - c2[1] as i32).pow(2) * 6;
+    let b_diff = (c1[2] as i32 - c2[2] as i32).pow(2) * 1;
 
     ((r_diff + g_diff + b_diff) as f64).sqrt() as i32
 }
