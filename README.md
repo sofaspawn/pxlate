@@ -2,6 +2,8 @@
 - generates pixel art for your image
 - and maybe occasionally smudge it too..
 
+- special thanks to [Alexander](https://github.com/zamazan4ik) for the improved binary size
+
 ## Pixelate:
 <div style="display: flex; justify-content: space-between;">
     <img src="./readme_expo/geto.jpeg" alt="test_image" width="45%" />
