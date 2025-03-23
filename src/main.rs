@@ -6,24 +6,32 @@ use image::{GenericImageView, ImageBuffer, ImageReader};
 use std::time;
 
 
-fn help(args: &Vec<String>){
-    let help = format!("
+fn help(args: &Vec<String>) {
+    let help = format!(
+        "
+Invalid command!
 
-!!!INVALID CALL!!!
-USAGE: {binary_name} <command> <path-to-input-image.png/jpg/jpeg> <name-of-output-image.png> [pixel_size/scaling_factor]
-[] -> optional
+USAGE: {binary_name} <command> <input_image.png/jpg/jpeg> <output_image.png> [pixel_size | scaling_factor]
 
-List of valid commands:
-1. smudge -> basic smudge the entire image to make it a little blurry
-2. pixelate -> convert an image into a cool pixelated representation of itself
+Arguments:
+  - <command>: The operation to perform on the image.
+  - <input_image>: Path to the input image.
+  - <output_image>: Path to save the processed image.
+  - [pixel_size | scaling_factor]: (Optional) Adjust processing parameters.
 
-Optional:
-1. pixel_size -> number of pixels to average out horizontally
-2. scaling_factor -> the amount by which to downscale and upscale the image (affects the level of detail)
+Available Commands:
+  1. smudge     - Applies a basic smudge effect, making the image slightly blurry.
+  2. pixelate   - Converts the image into a pixelated version.
 
-example: {binary_name} pixelate input.png output.png 4
+Optional Parameters:
+  - pixel_size      : Number of pixels to average out horizontally.
+  - scaling_factor  : Factor by which the image is downscaled and then upscaled (affects detail level).
 
-        ", binary_name=args[0]);
+Example:
+  {binary_name} pixelate input.png output.png 4
+",
+        binary_name = args[0]
+    );
     eprintln!("{}", help);
 }
 
